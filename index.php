@@ -22,6 +22,9 @@ $uploader = new \MyApp\ImageUploader();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $uploader->upload();
 }
+
+$images = $uploader->getImages();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,5 +39,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <input type="file" name="image">
       <input type="submit" value="upload">
     </form>
+
+    <ul>
+      <?php foreach ($images as $image) : ?>
+        <li>
+          <a href="<?php echo h(basename(IMAGES_DIR)) . '/' .basename($image); ?>">
+            <img src="<?php echo h($image); ?>">
+          </a>
+        </li>
+      <?php endforeach; ?>
+    </ul>
   </body>
 </html>
